@@ -65,17 +65,21 @@ def search(query_text):
         "boost": 24
     }
 
-    fields = ["title", "body_content", "url"]
-    index = 'search-elastic-docs'
+    fields = ["title", "description", "url", "availability", "price", "brand", "product_id"]
+    index = 'home-depot-product-catalog-vector'
     resp = es.search(index=index,
                      query=query,
                      knn=knn,
                      fields=fields,
-                     size=1,
+                     size=5,
                      source=False)
 
-    body = resp['hits']['hits'][0]['fields']['body_content'][0]
-    url = resp['hits']['hits'][0]['fields']['url'][0]
+    doc_list = resp['hits']['hits']
+    body = resp['hits']['hits']
+    url = ''
+    for doc in doc_list:
+        #body = body + doc['fields']['description'][0]
+        url = url + "\n\n" +  doc['fields']['url'][0]
 
     return body, url
 
@@ -96,8 +100,9 @@ def chat_gpt(prompt, model="gpt-3.5-turbo", max_tokens=1024, max_context_tokens=
 
     return response["choices"][0]["message"]["content"]
 
-
-st.title("ElasticDocs GPT")
+#image = Image.open('homecraft_logo.jpg')
+st.image("https://i.imgur.com/cdjafe0.png", caption=None)
+st.title("HomeCraft Search Bar")
 
 # Main chat form
 with st.form("chat_form"):
@@ -105,13 +110,14 @@ with st.form("chat_form"):
     submit_button = st.form_submit_button("Send")
 
 # Generate and display response on form submission
-negResponse = "I'm unable to answer the question based on the information I have from Elastic Docs."
+negResponse = "I'm unable to answer the question based on the information I have from Homecraft dataset."
 if submit_button:
     resp, url = search(query)
-    prompt = f"Answer this question: {query}\nUsing only the information from this Elastic Doc: {resp}\nIf the answer is not contained in the supplied doc reply '{negResponse}' and nothing else"
+    #prompt = f"Answer this question: {query}\nUsing only the information from these docs: {resp}\nIf the answer is not contained in the supplied doc reply '{negResponse}' and nothing else"
+    prompt = f"Answer this question: {query}\n:using the product catalog provided in these docs: {resp}\n"
     answer = chat_gpt(prompt)
     
     if negResponse in answer:
-        st.write(f"ChatGPT: {answer.strip()}")
+        st.write(f"Search Assistant: {answer.strip()}")
     else:
-        st.write(f"ChatGPT: {answer.strip()}\n\nDocs: {url}")
+        st.write(f"Search Assistant: {answer.strip()}\n\nDocs: {url}")
