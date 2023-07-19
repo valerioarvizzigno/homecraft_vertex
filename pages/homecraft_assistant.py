@@ -1,7 +1,8 @@
 import os
 import streamlit as st
-import openai
 from elasticsearch import Elasticsearch
+import vertexai
+from vertexai.language_models import TextGenerationModel
 
 # This code is part of an Elastic Blog showing how to combine
 # Elasticsearch's search relevancy power with 
@@ -18,8 +19,15 @@ from elasticsearch import Elasticsearch
 # cloud_user - Elasticsearch Cluster User
 # cloud_pass - Elasticsearch User Password
 
-openai.api_key = os.environ['openai_api']
-model = "gpt-3.5-turbo-0301"
+
+vertexai.init(project="elastic-sa", location="us-central1")
+parameters = {
+    "temperature": 0.4,
+    "max_output_tokens": 606,
+    "top_p": 0.8,
+    "top_k": 40
+}
+model = TextGenerationModel.from_pretrained("text-bison@001")
 
 # Connect to Elastic Cloud cluster
 def es_connect(cid, user, passwd):
@@ -91,14 +99,19 @@ def truncate_text(text, max_tokens):
     return ' '.join(tokens[:max_tokens])
 
 # Generate a response from ChatGPT based on the given prompt
-def chat_gpt(prompt, model="gpt-3.5-turbo", max_tokens=1024, max_context_tokens=4000, safety_margin=5):
+def vertexAI(prompt):
     # Truncate the prompt content to fit within the model's context length
-    truncated_prompt = truncate_text(prompt, max_context_tokens - max_tokens - safety_margin)
+    #truncated_prompt = truncate_text(prompt, max_context_tokens - max_tokens - safety_margin)
 
-    response = openai.ChatCompletion.create(model=model,
-                                            messages=[{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": truncated_prompt}])
+#    response = openai.ChatCompletion.create(model=model,
+#                                            messages=[{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": truncated_prompt}])
+    response = model.predict(
+        prompt,
+        **parameters
+    )
 
-    return response["choices"][0]["message"]["content"]
+    return response.text
+#   return response["choices"][0]["message"]["content"]
 
 #image = Image.open('homecraft_logo.jpg')
 st.image("https://i.imgur.com/cdjafe0.png", caption=None)
@@ -113,11 +126,11 @@ with st.form("chat_form"):
 negResponse = "I'm unable to answer the question based on the information I have from Homecraft dataset."
 if submit_button:
     resp, url = search(query)
-    #prompt = f"Answer this question: {query}\nUsing only the information from these docs: {resp}\nIf the answer is not contained in the supplied doc reply '{negResponse}' and nothing else"
     prompt = f"Answer this question: {query}\n:using the product catalog provided in these docs: {resp}\n"
-    answer = chat_gpt(prompt)
+    answer = vertexAI(prompt)
     
     if negResponse in answer:
         st.write(f"Search Assistant: {answer.strip()}")
     else:
         st.write(f"Search Assistant: {answer.strip()}\n\nDocs: {url}")
+
