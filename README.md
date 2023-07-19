@@ -38,5 +38,7 @@ gcloud auth application-default login
  ```bash
 streamlit run homecraft_home.py
 ```  
+******USE THE SECOND PAGE ON STREAMLIT - HOMECRAFT ASSISTANT ************
+Try a query like: "List the top 3 paint primer in the product catalog with related price and url. Then explain in bullet points how to use a paint primer on my house's walls"
 
-WORK IN PROGRESS. This readme is a quick DRAFT. Full guidelines will be added soon.
+!!!WORK IN PROGRESS!!! This readme is a quick DRAFT. Full guidelines will be added soon.
