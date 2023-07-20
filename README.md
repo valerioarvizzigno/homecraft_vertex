@@ -38,7 +38,19 @@ gcloud auth application-default login
  ```bash
 streamlit run homecraft_home.py
 ```  
-******USE THE SECOND PAGE ON STREAMLIT - HOMECRAFT ASSISTANT ************
-Try a query like: "List the top 3 paint primer in the product catalog with related price and url. Then explain in bullet points how to use a paint primer on my house's walls"
+---USE THE SECOND PAGE ON STREAMLIT - HOMECRAFT ASSISTANT---
+
+Try a query like: 
+"list the 3 top paint primers in the product catalog, specify also product price and product key features. Then explain in bullet points how to use a paint primer"
+You can also try asking for related urls and availability
+
+or: could you please list the available stores in UK
+or: could you please list the available stores in UK? Please also add a reference to the webpage I can find this list
+
+or: Which are the ways to contact customer support in the UK? What is the webpage url for customer support?
+
+---FOR A DEMO OF FINE-TUNED MODEL USE "HOMECRAFT FINETUNED" WEBPAGE---
+TBD
+
 
 !!!WORK IN PROGRESS!!! This readme is a quick DRAFT. Full guidelines will be added soon.
