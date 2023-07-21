@@ -38,7 +38,7 @@ gcloud auth application-default login
  ```bash
 streamlit run homecraft_home.py
 ```  
----USE THE SECOND PAGE ON STREAMLIT - HOMECRAFT ASSISTANT---
+---USE THE HOME PAGE FOR BASE DEMO---
 
 Try a query like: 
 "list the 3 top paint primers in the product catalog, specify also product price and product key features. Then explain in bullet points how to use a paint primer"
