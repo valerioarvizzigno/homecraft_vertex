@@ -140,6 +140,35 @@ def search_docs(query_text):
 
     return body, url
 
+# Search ElasticSearch index for user's order history
+def search_orders(user):
+
+    # Use only text-search
+    query = {
+        "bool": {
+            "must": [{
+                "match": {
+                    "user_id": {
+                        "query": user,
+                        "boost": 1
+                    }
+                }
+            }]
+        }
+    }
+
+    fields = ["id", "order_id", "user_id", "product_id" "status", "created_at", "shipped_at", "delivered_at", "returned_at", "sale_price"]
+    index = 'bigquery-thelook-order-items'
+    resp = es.search(index=index,
+                     query=query,
+                     fields=fields,
+                     size=10,
+                     source=False)
+
+    order_items_list = resp['hits']['hits']
+
+    return order_items_list
+
 def truncate_text(text, max_tokens):
     tokens = text.split()
     if len(tokens) <= max_tokens:
@@ -173,7 +202,8 @@ if submit_button:
     es = es_connect(cid, cu, cp)
     resp_products, url_products = search_products(query)
     resp_docs, url_docs = search_docs(query)
-    prompt = f"Answer this question: {query}\n:if product information is request use the product catalog provided in these docs: {resp_products}\n. For other questions use the documentation provided in these docs: {resp_docs} and your own knowledge."
+    resp_order_items = search_orders(1) # 1 is the hardcoded userid, to simplify this scenario. You should take user_id by user session
+    prompt = f"Answer this question: {query}\n:if product information is requested use the product catalog provided in these docs: {resp_products}\n. For other questions use the documentation provided in these docs: {resp_docs} and your own knowledge. If the user asks for its past orders consider the following order list: {resp_order_items}"
     answer = vertexAI(prompt)
     
     if answer.strip() == '':
