@@ -1,5 +1,14 @@
 # Homecraft Retail demo with Elastic ESRE and Google's GenAI
 
+This repo shows how to leverage Elastic search capabilities (both text and vector ones) togheter with Google Cloud's GenerativeAI models and VertexAI features to create a new retail experience. With this repo you will:
+
+- Create a python streamlit app with an intelligent search bar
+- Integrate with Palm2 models and VertexAI APIs
+- Configure an Elastic cluster as a private data source to build context for LLMs
+- Ingest data from multiple data sources (Web Crawler, files, BigQuery)
+- Use Elastic's text_embeddings and vector search for finding relevant content
+- Fine-tune the text-bison@001 foundation model via VertexAI for specific tasks handling
+- and more...
 
 ## Configuration steps
 
@@ -51,7 +60,7 @@ gcloud auth application-default login
 9. Load the all-distillroberta-v1 (https://huggingface.co/sentence-transformers/all-distilroberta-v1) ML model in you Elastic cluster via Eland client and start it. To run Eland client you need docker installed. An easy way to accomplish this step without python/docker installation is via Google's Cloud Shell.
 
  ```bash
-git clone https://github.com/elastic/elang.git
+git clone https://github.com/elastic/eland.git
 
 cd eland/
 
@@ -63,7 +72,7 @@ docker run -it --rm elastic/eland eland_import_hub_model
 --start
  ```
 
-10. Index  general data from a retailer website (I used https://www.ikea.com/gb/en/) with Elastic Enterprise Search's webcrawler and give the index the "search-homecraft-ikea" name (for immediate compatibility with this repo code, otherwise change the reference in all homecraft_*.py files). Set an ingest pipeline, named "ml-inference-title-vector", working directly at crawling time, to enrich crawled documents with dense vectors. Use the previously loaded ML model for inference on the "title" field as source, and set "title-vector" as target field for dense vectors.
+10. Index  general data from a retailer website (I used https://www.ikea.com/gb/en/) with Elastic Enterprise Search's webcrawler and give the index the "search-homecraft-ikea" name (for immediate compatibility with this repo code, otherwise change the index references in all homecraft_*.py files). For better crawling performance search the sitemap.xml file inside the robots.txt file of the targe webserver, and add its path to the Site Maps tab. Set a custom ingest pipeline, named "ml-inference-title-vector", working directly at crawling time, to enrich crawled documents with dense vectors. Use the previously loaded ML model for inference on the "title" field as source, and set "title-vector" as target field for dense vectors.
 
 11. Before launching the crawler, set mappings for the title-vector field on the index
 
@@ -85,7 +94,7 @@ POST search-homecraft-ikea/_mapping
 
 13. Index the Home Depot products dataset (https://www.kaggle.com/datasets/thedevastator/the-home-depot-products-dataset) into elastic.
 
-14. Create a new empty index that will host the dense vectors called "home-depot-product-catalog-vector" (for immediate compatibility with this repo code, otherwise change the reference in all homecraft_*.py files) and specify mappings.
+14. Create a new empty index that will host the dense vectors called "home-depot-product-catalog-vector" (for immediate compatibility with this repo code, otherwise change the index references in all homecraft_*.py files) and specify mappings.
 
 ```bash
 PUT /home-depot-product-catalog-vector 
