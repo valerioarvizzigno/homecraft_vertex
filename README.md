@@ -33,6 +33,7 @@ gcloud auth application-default login
 7. Load the all-distillroberta-v1 (https://huggingface.co/sentence-transformers/all-distilroberta-v1) ML model in you Elastic cluster via Eland client and start it
 8. Index the Home Depot dataset (https://www.kaggle.com/datasets/thedevastator/the-home-depot-products-dataset) into elastic through an ingest pipeline that leverages the previosly loaded model on the title field
 9. Set up the environment variables cloud_id, cloud_pass and cloud_user with your deployment credentials and cloud id.
+10. Fine-tune text-bison@001 via VertexAI fine-tuning feature, using the fine-tuning/fine_tuning_dataset.jsonl file. This will instruct the model in advertizing partner network when specific questions are asked. For more information about fine-tuning look at https://cloud.google.com/vertex-ai/docs/generative-ai/models/tune-models#generative-ai-tune-model-python
 10. Run streamlit app
 
  ```bash
@@ -50,7 +51,11 @@ or: could you please list the available stores in UK? Please also add a referenc
 or: Which are the ways to contact customer support in the UK? What is the webpage url for customer support?
 
 ---FOR A DEMO OF FINE-TUNED MODEL USE "HOMECRAFT FINETUNED" WEBPAGE---
-TBD
+
+Try "Anyone available at Homecraft to assist with painting my house?".
+Asking this question in the fine-tuned page should suggest to go with Homecraft's network of professionals
+
+Asking the same to the base model will likely provide a generic or "unable to help" answer.
 
 
 !!!WORK IN PROGRESS!!! This readme is a quick DRAFT. Full guidelines will be added soon.

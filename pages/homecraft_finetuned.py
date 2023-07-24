@@ -2,7 +2,9 @@ import os
 import streamlit as st
 from elasticsearch import Elasticsearch
 import vertexai
-from vertexai.language_models import TextGenerationModel
+from vertexai.preview.language_models import TextGenerationModel
+
+#WATCHOUT!!! For fine-tuning feature you need to import vertexai.preview instead of just vertexAI
 
 # This page shows the integration with a fine-tuned text-bison model via VertexAI
 
@@ -21,16 +23,18 @@ cid = os.environ['cloud_id']
 cp = os.environ['cloud_pass']
 cu = os.environ['cloud_user']
 
-vertexai.init(project=projid, location="us-central1")
+vertexai.init(project="1059491012611", location="us-central1")
 parameters = {
-    "temperature": 0.4, # 0 - 1. The higher the temp the more creative and less on point answers become
-    "max_output_tokens": 606, #modify this number (1 - 1024) for short/longer answers
+    "temperature": 0.5,
+    "max_output_tokens": 606,
     "top_p": 0.8,
     "top_k": 40
 }
 
 #we are here referencing our custom fine-tuned model
-model = TextGenerationModel.from_pretrained("text-bison@001") 
+model = TextGenerationModel.from_pretrained("text-bison@001")
+model = model.get_tuned_model("projects/1059491012611/locations/us-central1/models/5745671733780676608")
+
 
 # Connect to Elastic Cloud cluster
 def es_connect(cid, user, passwd):
@@ -173,7 +177,7 @@ if submit_button:
     es = es_connect(cid, cu, cp)
     resp_products, url_products = search_products(query)
     resp_docs, url_docs = search_docs(query)
-    prompt = f"Answer this question: {query}\n:if product information is request use the product catalog provided in these docs: {resp_products}\n. For other questions use the documentation provided in these docs: {resp_docs} and your own knowledge."
+    prompt = f"question: {query}"
     answer = vertexAI(prompt)
     
     if negResponse in answer:
