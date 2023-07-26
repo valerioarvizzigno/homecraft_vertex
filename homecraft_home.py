@@ -203,7 +203,7 @@ if submit_button:
     resp_products, url_products = search_products(query)
     resp_docs, url_docs = search_docs(query)
     resp_order_items = search_orders(1) # 1 is the hardcoded userid, to simplify this scenario. You should take user_id by user session
-    prompt = f"Answer this question: {query}\n:if product information is requested use the product catalog provided in these docs: {resp_products}\n. For other questions use the documentation provided in these docs: {resp_docs} and your own knowledge. If the user asks for its past orders consider the following order list: {resp_order_items}"
+    prompt = f"Answer this question: {query}\n:if product information is requested use the products information provided in these docs: {resp_products}\n. For other questions use the documentation provided in these docs: {resp_docs} and your own knowledge. Only if the question contains requests for user past orders consider the following order list: {resp_order_items}"
     answer = vertexAI(prompt)
     
     if answer.strip() == '':
