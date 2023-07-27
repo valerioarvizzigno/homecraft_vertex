@@ -164,7 +164,7 @@ You can also try asking for related urls and availability --> leveraging private
 
 - "Which are the ways to contact customer support in the UK? What is the webpage url for customer support?" --> it will likely use crawled docs
 
-- Please provide the social media account info from the company --> it will likely use crawled docs
+- Please provide the social media accounts info from the company --> it will likely use crawled docs
 
 - Please provide the full address of the Manchester store in UK --> it will likely use crawled docs
 
