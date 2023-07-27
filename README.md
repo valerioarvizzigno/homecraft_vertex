@@ -168,7 +168,11 @@ You can also try asking for related urls and availability --> leveraging private
 
 - Please provide the full address of the Manchester store in UK --> it will likely use crawled docs
 
-- Could you please list my past orders? Please specify their total price --> it will search into BigQuery order dataset
+- are you offering a free parcel delivery? --> it will likely use crawled docs
+
+- Could you please list my past orders? Please specify price for each product --> it will search into BigQuery order dataset
+
+- List all the items I have bought in my order history in bullet points
 
 
 ---FOR A DEMO OF FINE-TUNED MODEL USE "HOMECRAFT FINETUNED" WEBPAGE---
