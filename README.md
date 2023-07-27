@@ -155,16 +155,20 @@ streamlit run homecraft_home.py
 
 ---USE THE HOME PAGE FOR BASE DEMO---
 
-Try a query like: 
-"List the 3 top paint primers in the product catalog, specify also the sales price for each product and product key features. Then explain in bullet points how to use a paint primer".
+Try queries like: 
+
+- "List the 3 top paint primers in the product catalog, specify also the sales price for each product and product key features. Then explain in bullet points how to use a paint primer".
 You can also try asking for related urls and availability --> leveraging private product catalog + public knowledge
 
-or: could you please list the available stores in UK
-or: could you please list the available stores in UK? Please also add the webpage on the website where to find store location
+- "could you please list the available stores in UK" --> --> it will likely use (crawled docs)
 
-or: Which are the ways to contact customer support in the UK? What is the webpage url for customer support? -->crawled docs
+- "Which are the ways to contact customer support in the UK? What is the webpage url for customer support?" --> it will likely use crawled docs
 
-or: Could you please list my past orders? Please specify their total price --> Orders private data
+- Please provide the social media account info from the company --> it will likely use crawled docs
+
+- Please provide the full address of the Manchester store in UK --> it will likely use crawled docs
+
+- Could you please list my past orders? Please specify their total price --> it will search into BigQuery order dataset
 
 
 ---FOR A DEMO OF FINE-TUNED MODEL USE "HOMECRAFT FINETUNED" WEBPAGE---

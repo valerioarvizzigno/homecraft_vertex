@@ -23,15 +23,15 @@ cid = os.environ['cloud_id']
 cp = os.environ['cloud_pass']
 cu = os.environ['cloud_user']
 
-def vertex_init():
-    vertexai.init(project="1059491012611", location="us-central1")
-    parameters = {
+parameters = {
         "temperature": 0.5,
         "max_output_tokens": 606,
         "top_p": 0.8,
         "top_k": 40
     }
 
+vertexai.init(project="1059491012611", location="us-central1")
+    
 #we are here referencing our custom fine-tuned model
 model = TextGenerationModel.from_pretrained("text-bison@001")
 model = model.get_tuned_model("projects/1059491012611/locations/us-central1/models/5745671733780676608")
@@ -175,7 +175,6 @@ with st.form("chat_form"):
 # Generate and display response on form submission
 negResponse = "I'm unable to answer the question based on the information I have from Homecraft dataset."
 if submit_button:
-    vertex_init()
     es = es_connect(cid, cu, cp)
     resp_products, url_products = search_products(query)
     resp_docs, url_docs = search_docs(query)

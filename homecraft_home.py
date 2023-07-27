@@ -23,13 +23,15 @@ cid = os.environ['cloud_id']
 cp = os.environ['cloud_pass']
 cu = os.environ['cloud_user']
 
-vertexai.init(project=projid, location="us-central1")
 parameters = {
     "temperature": 0.4, # 0 - 1. The higher the temp the more creative and less on point answers become
     "max_output_tokens": 606, #modify this number (1 - 1024) for short/longer answers
     "top_p": 0.8,
     "top_k": 40
 }
+
+vertexai.init(project=projid, location="us-central1")
+
 model = TextGenerationModel.from_pretrained("text-bison@001")
 
 # Connect to Elastic Cloud cluster
@@ -203,7 +205,7 @@ if submit_button:
     resp_products, url_products = search_products(query)
     resp_docs, url_docs = search_docs(query)
     resp_order_items = search_orders(1) # 1 is the hardcoded userid, to simplify this scenario. You should take user_id by user session
-    prompt = f"Answer this question: {query}\n. If product information is requested use all the information provided in these docs: {resp_products}\n. For other questions use the documentation provided in these docs: {resp_docs} and your own knowledge. Only if the question contains requests for user past orders consider the following order list: {resp_order_items}"
+    prompt = f"Answer this question: {query}\n. If product information is requested use the information provided in these docs: {resp_products}\n. For other questions use the documentation provided in these docs: {resp_docs} and your own knowledge. Only if the question contains requests for user past orders consider the following order list: {resp_order_items}"
     answer = vertexAI(prompt)
     
     if answer.strip() == '':
