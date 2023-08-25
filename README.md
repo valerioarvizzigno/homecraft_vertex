@@ -151,7 +151,7 @@ git clone https://github.com/valerioarvizzigno/homecraft_vertex.git
 streamlit run homecraft_home.py
 ```  
 
-
+## Sample questions
 
 ---USE THE HOME PAGE FOR BASE DEMO---
 
