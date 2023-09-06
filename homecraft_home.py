@@ -211,5 +211,5 @@ if submit_button:
     if answer.strip() == '':
         st.write(f"Search Assistant: \n\n{answer.strip()}")
     else:
-        st.write(f"Search Assistant: {answer.strip()}\n\n")
+        st.write(f"Search Assistant: \n\n{answer.strip()}\n\n")
 

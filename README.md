@@ -135,17 +135,11 @@ POST _reindex
 
 17. Leverage the BigQuery to Elasticsearch Dataflow's [native integration](https://www.elastic.co/blog/ingest-data-directly-from-google-bigquery-into-elastic-using-google-dataflow) to move a [sample e-commerce dataset](https://console.cloud.google.com/marketplace/product/bigquery-public-data/thelook-ecommerce?project=elastic-sa) into Elastic. Take a look ad tables available in this dataset withih BigQuery explorer UI. Copy the ID of the "Order_items" table and create a new Dataflow job to move data from this BQ table to an index named "bigquery-thelook-order-items". You need to create an API key on the Elastic cluster and pass it along with Elastic cluster's cloud_id, user and pass to the job config. This new index will be used for retrieving user orders.
 
-18. Clone this repo in your project folder.
+18. Set up the environment variables cloud_id, cloud_pass, cloud_user (Elastic deployment) and gcp_project_id (the GCP project you're working in)
 
-```bash
-git clone https://github.com/valerioarvizzigno/homecraft_vertex.git
-```
+19. Fine-tune text-bison@001 via VertexAI fine-tuning feature, using the fine-tuning/fine_tuning_dataset.jsonl file. This will instruct the model in advertizing partner network when specific questions are asked. For more information about fine-tuning look at https://cloud.google.com/vertex-ai/docs/generative-ai/models/tune-models#generative-ai-tune-model-python
 
-19. Set up the environment variables cloud_id, cloud_pass, cloud_user (Elastic deployment) and gcp_project_id (the GCP project you're working in)
-
-20. Fine-tune text-bison@001 via VertexAI fine-tuning feature, using the fine-tuning/fine_tuning_dataset.jsonl file. This will instruct the model in advertizing partner network when specific questions are asked. For more information about fine-tuning look at https://cloud.google.com/vertex-ai/docs/generative-ai/models/tune-models#generative-ai-tune-model-python
-
-21. Run streamlit app
+20. Run streamlit app
 
  ```bash
 streamlit run homecraft_home.py
