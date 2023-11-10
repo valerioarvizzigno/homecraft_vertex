@@ -12,6 +12,8 @@ This repo shows how to leverage Elastic search capabilities (both text and vecto
 
 ## Configuration steps
 
+!!! NEW !!! Now available a detailed step-by-step walkthrough to implement this repo [here](https://github.com/valerioarvizzigno/homecraft_vertex_lab) (also usable for external workshops)  
+
 1. Setup your Elastic cluster with ML nodes
 
 2. Install python on your local machine. If using Homebew on macOS simply use
@@ -72,10 +74,7 @@ cd eland/
 
 docker build -t elastic/eland .
 
-docker run -it --rm elastic/eland eland_import_hub_model 
---url https://<elastic_user>:<elastic_password>@<your_elastic_endpoint>:9243/ 
---hub-model-id sentence-transformers/all-distilroberta-v1 
---start
+docker run -it --rm elastic/eland eland_import_hub_model --url https://<elastic_user>:<elastic_password>@<your_elastic_endpoint>:9243/ --hub-model-id sentence-transformers/all-distilroberta-v1 --start
  ```
 
 11. Index  general data from a retailer website (I used https://www.ikea.com/gb/en/) with Elastic Enterprise Search's webcrawler and give the index the "search-homecraft-ikea" name (for immediate compatibility with this repo code, otherwise change the index references in all homecraft_*.py files). For better crawling performance search the sitemap.xml file inside the robots.txt file of the target webserver, and add its path to the Site Maps tab. Set a custom ingest pipeline, named "ml-inference-title-vector", working directly at crawling time, to enrich crawled documents with dense vectors. Use the previously loaded ML model for inference on the "title" field as source, and set "title-vector" as target field for dense vectors.
