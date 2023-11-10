@@ -28,7 +28,7 @@ brew install python@3.11
 python -m venv homecraftenv
 ```
 
-4. (Optional) If step 3 is followed, activate your virtual env. Check here https://docs.python.org/3/tutorial/venv.html commands depending on your OS. For Unix or macOS use
+4. (Optional) If step 3 is followed, activate your virtual env. Check [here](https://docs.python.org/3/tutorial/venv.html) to check commands depending on your OS. For Unix or macOS use
 
 ```bash
 source homecraftenv/bin/activate
@@ -46,7 +46,7 @@ git clone https://github.com/valerioarvizzigno/homecraft_vertex.git
 pip install -r requirements.txt 
 ```
 
-7. Install gcloud SDK. It is needed to connect to VertexAI APIs. (https://cloud.google.com/sdk/docs/install-sdk)
+7. Install gcloud SDK. It is needed to connect to VertexAI APIs. [docs here](https://cloud.google.com/sdk/docs/install-sdk)
    Follow the instructions at the link depending on your OS. If using Homebrew on macOS you can simply install it with
 
  ```bash
@@ -59,13 +59,13 @@ brew install --cask google-cloud-sdk
 gcloud init
 ```  
 
-9. Authenticate the VertexAI SDK (it has been installed with requirements.txt). More info here https://googleapis.dev/python/google-api-core/latest/auth.html
+9. Authenticate the VertexAI SDK (it has been installed with requirements.txt). More info [here](https://googleapis.dev/python/google-api-core/latest/auth.html)
 
  ```bash
 gcloud auth application-default login
 ```  
 
-10. Load the all-distillroberta-v1 (https://huggingface.co/sentence-transformers/all-distilroberta-v1) ML model in you Elastic cluster via Eland client and start it. To run Eland client you need docker installed. An easy way to accomplish this step without python/docker installation is via Google's Cloud Shell.
+10. Load the [all-distillroberta-v1](https://huggingface.co/sentence-transformers/all-distilroberta-v1) ML model in you Elastic cluster via Eland client and start it. To run Eland client you need docker installed. An easy way to accomplish this step without python/docker installation is via Google's Cloud Shell.
 
  ```bash
 git clone https://github.com/elastic/eland.git
@@ -97,7 +97,7 @@ POST search-homecraft-ikea/_mapping
 
 13. Start crawling.
 
-14. Index the Home Depot products dataset (https://www.kaggle.com/datasets/thedevastator/the-home-depot-products-dataset) into elastic.
+14. Index the Home Depot [products dataset](https://www.kaggle.com/datasets/thedevastator/the-home-depot-products-dataset) into elastic.
 
 15. Create a new empty index that will host the dense vectors called "home-depot-product-catalog-vector" (for immediate compatibility with this repo code, otherwise change the index references in all homecraft_*.py files) and specify mappings.
 
@@ -143,7 +143,7 @@ export cloud_pass='<replaceHereYourElasticDeploymentPassword>'
 export gcp_project_id='<replaceHereTheGCPProjectID>'
 ```
 
-19. Fine-tune text-bison@001 via VertexAI fine-tuning feature, using the fine-tuning/fine_tuning_dataset.jsonl file. This will instruct the model in advertizing partner network when specific questions are asked. For more information about fine-tuning look at https://cloud.google.com/vertex-ai/docs/generative-ai/models/tune-models#generative-ai-tune-model-python
+19. Fine-tune text-bison@001 via VertexAI fine-tuning feature, using the fine-tuning/fine_tuning_dataset.jsonl file. This will instruct the model in advertizing partner network when specific questions are asked. For more information about fine-tuning look at [these docs](https://cloud.google.com/vertex-ai/docs/generative-ai/models/tune-models#generative-ai-tune-model-python)
 
 20. Run streamlit app
 
